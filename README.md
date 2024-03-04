@@ -1,11 +1,11 @@
 # qtcat
 
-the cutest program ever :3
+cutest program ever :3
 
 ## features
 
-- can show u random cats
-- form that replaces 'a' with 'meow'
+- see random cats
+- meowify text
 - open sauce
 
 ## depends
