@@ -1,5 +1,5 @@
 from PyQt5.QtWidgets import (QApplication, QHBoxLayout, QLabel, QPushButton,
-                             QVBoxLayout, QWidget, QLineEdit)
+                             QScrollArea, QVBoxLayout, QWidget, QLineEdit)
 from PyQt5.QtGui import QImage, QPixmap
 from PyQt5.QtCore import Qt
 import urllib.request
@@ -29,12 +29,18 @@ def main():
 
     out = QLabel()
     out.setWordWrap(True)
+    out.setAlignment(Qt.AlignmentFlag.AlignLeft
+                     | Qt.AlignmentFlag.AlignTop)  # type: ignore
 
+    scroll = QScrollArea()
+    scroll.setWidget(out)
+    scroll.setWidgetResizable(True)
     img = QLabel()
+
     img.setPixmap(get_cat_pixmap())
 
     layout.addLayout(form)
-    layout.addWidget(out)
+    layout.addWidget(scroll)
     layout.addWidget(reload_button)
     layout.addWidget(img)
 
