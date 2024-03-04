@@ -1,5 +1,5 @@
-from PyQt5.QtWidgets import (QApplication, QHBoxLayout, QLabel, QPushButton,
-                             QScrollArea, QVBoxLayout, QWidget, QLineEdit)
+from PyQt5.QtWidgets import (QApplication, QLabel, QPushButton, QScrollArea,
+                             QTextEdit, QVBoxLayout, QWidget)
 from PyQt5.QtGui import QImage, QPixmap
 from PyQt5.QtCore import Qt
 import urllib.request
@@ -9,40 +9,33 @@ import threading
 def main():
     app = QApplication([])
 
-    inputBox = QLineEdit()
-    inputBox.setPlaceholderText("type something here")
-    inputBox.returnPressed.connect(lambda: on_click(inputBox.text(), out))
-
-    submit_button = QPushButton("meowify")
-    submit_button.clicked.connect(lambda: on_click(inputBox.text(), out))
-
-    reload_button = QPushButton("refresh")
-    reload_button.clicked.connect(lambda: refresh_cat(img))
-
-    form = QHBoxLayout()
-    form.addWidget(inputBox)
-    form.addWidget(submit_button)
+    text_edit = QTextEdit()
+    text_edit.setPlaceholderText("type something here")
+    text_edit.textChanged.connect(lambda: on_change(text_edit, out))
 
     out = QLabel()
     out.setWordWrap(True)
     out.setAlignment(Qt.AlignmentFlag.AlignLeft
                      | Qt.AlignmentFlag.AlignTop)  # type: ignore
 
-    scroll = QScrollArea()
-    scroll.setWidget(out)
-    scroll.setWidgetResizable(True)
+    out_scroll = QScrollArea()
+    out_scroll.setWidget(out)
+    out_scroll.setWidgetResizable(True)
 
-    img = QLabel()
-    img.setPixmap(get_cat_pixmap())
+    refresh_button = QPushButton("refresh")
+    refresh_button.clicked.connect(lambda: refresh_cat(cat_image))
+
+    cat_image = QLabel()
+    refresh_cat(cat_image)
 
     layout = QVBoxLayout()
-    layout.addLayout(form)
-    layout.addWidget(scroll)
-    layout.addWidget(reload_button)
-    layout.addWidget(img)
+    layout.addWidget(text_edit)
+    layout.addWidget(out_scroll)
+    layout.addWidget(refresh_button)
+    layout.addWidget(cat_image)
 
     window = QWidget()
-    window.setFixedSize(400, 400)
+    window.setFixedSize(500, 500)
     window.setWindowTitle("qtcat <3")
     window.setLayout(layout)
     window.show()
@@ -63,8 +56,10 @@ def refresh_cat(label: QLabel):
     thread.start()
 
 
-def on_click(text: str, label: QLabel):
-    label.setText(meowify(text))
+def on_change(text_edit: QTextEdit, label: QLabel):
+    text = text_edit.toPlainText()
+    meowified = meowify(text)
+    label.setText(meowified)
 
 
 def meowify(text: str):
