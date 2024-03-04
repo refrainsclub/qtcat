@@ -8,12 +8,7 @@ import threading
 
 def main():
     app = QApplication([])
-    window = QWidget()
-    window.setFixedSize(400, 400)
-    window.setWindowTitle("qtcat <3")
-    layout = QVBoxLayout()
 
-    form = QHBoxLayout()
     inputBox = QLineEdit()
     inputBox.setPlaceholderText("type something here")
     inputBox.returnPressed.connect(lambda: on_click(inputBox.text(), out))
@@ -24,6 +19,7 @@ def main():
     reload_button = QPushButton("refresh")
     reload_button.clicked.connect(lambda: refresh_cat(img))
 
+    form = QHBoxLayout()
     form.addWidget(inputBox)
     form.addWidget(submit_button)
 
@@ -35,17 +31,22 @@ def main():
     scroll = QScrollArea()
     scroll.setWidget(out)
     scroll.setWidgetResizable(True)
-    img = QLabel()
 
+    img = QLabel()
     img.setPixmap(get_cat_pixmap())
 
+    layout = QVBoxLayout()
     layout.addLayout(form)
     layout.addWidget(scroll)
     layout.addWidget(reload_button)
     layout.addWidget(img)
 
+    window = QWidget()
+    window.setFixedSize(400, 400)
+    window.setWindowTitle("qtcat <3")
     window.setLayout(layout)
     window.show()
+
     app.exec()
 
 
@@ -54,7 +55,7 @@ def get_cat_pixmap():
     img = QImage()
     img.loadFromData(data)
     pixmap = QPixmap(img)
-    return pixmap.scaled(400, 400, Qt.AspectRatioMode.KeepAspectRatio)
+    return pixmap.scaled(500, 500, Qt.AspectRatioMode.KeepAspectRatio)
 
 
 def refresh_cat(label: QLabel):
@@ -63,7 +64,11 @@ def refresh_cat(label: QLabel):
 
 
 def on_click(text: str, label: QLabel):
-    label.setText(text.replace("a", "meow"))
+    label.setText(meowify(text))
+
+
+def meowify(text: str):
+    return text.replace("a", "meow")
 
 
 if __name__ == "__main__":
