@@ -63,7 +63,8 @@ def on_change(text_edit: QTextEdit, label: QLabel):
 
 
 def meowify(text: str):
-    return text.replace("a", "meow")
+    mapping = str.maketrans({"e": "meow", "t": "mrrp", "a": "nya"})
+    return text.translate(mapping)
 
 
 if __name__ == "__main__":
