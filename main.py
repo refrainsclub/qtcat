@@ -1,5 +1,12 @@
-from PyQt5.QtWidgets import (QApplication, QLabel, QPushButton, QScrollArea,
-                             QTextEdit, QVBoxLayout, QWidget)
+from PyQt5.QtWidgets import (
+    QApplication,
+    QLabel,
+    QPushButton,
+    QScrollArea,
+    QTextEdit,
+    QVBoxLayout,
+    QWidget,
+)
 from PyQt5.QtGui import QImage, QPixmap
 from PyQt5.QtCore import Qt
 import urllib.request
