@@ -22,8 +22,7 @@ def main():
 
     out = QLabel()
     out.setWordWrap(True)
-    out.setAlignment(Qt.AlignmentFlag.AlignLeft
-                     | Qt.AlignmentFlag.AlignTop)  # type: ignore
+    out.setAlignment(Qt.AlignmentFlag.AlignTop)
 
     out_scroll = QScrollArea()
     out_scroll.setWidget(out)
